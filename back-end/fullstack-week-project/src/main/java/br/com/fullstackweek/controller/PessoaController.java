@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -38,17 +39,19 @@ public class PessoaController {
 	public PessoaResponse post(@Valid @RequestBody PessoaRequest pessoaRequest) {		
 		return this.pessoaService.create(pessoaRequest);
 	}
-	
-	
+		
 	@GetMapping("/{codigo}")	
 	public List<PessoaResponse> getById(@PathVariable Long codigo) {
-		return this.pessoaService.findById(codigo);
-				
+		return this.pessoaService.findById(codigo);				
 	}
 	
+	@PutMapping("/{codigo}")	
+	public PessoaResponse put(@Valid @RequestBody PessoaRequest pessoaRequest, @PathVariable Long codigo) {
+		return this.pessoaService.update(pessoaRequest, codigo);				
+	}		
 	
 	@DeleteMapping("/{codigo}")	
-	public void deleteById(@PathVariable Long codigo) {
+	public void delete(@PathVariable Long codigo) {
 		this.pessoaService.deleteById(codigo);				
 	}
 }

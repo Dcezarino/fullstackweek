@@ -2,6 +2,8 @@ package br.com.fullstackweek.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,42 +16,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.fullstackweek.entity.GruposPrioridades;
-import br.com.fullstackweek.exception.NotFound;
-import br.com.fullstackweek.repository.GruposPrioridadesRepository;
+import br.com.fullstackweek.request.GruposPrioridadesRequest;
+import br.com.fullstackweek.response.GruposPrioridadesResponse;
+import br.com.fullstackweek.service.GruposPrioridadesService;
 
 @RestController
 @RequestMapping("/gruposPrioridades")
 public class GruposPrioridadesController {
 
 	@Autowired
-	private GruposPrioridadesRepository gruposPrioridadesRepository;
+	private GruposPrioridadesService gruposPrioridadesService;
 
 	@GetMapping
-	public List<GruposPrioridades> getAll() {
-		return gruposPrioridadesRepository.findAll();
+	public List<GruposPrioridadesResponse> getAll() {
+		return gruposPrioridadesService.getAll();
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public GruposPrioridades post(@RequestBody GruposPrioridades gruposPrioridades) {
-		return gruposPrioridadesRepository.save(gruposPrioridades);
+	public GruposPrioridadesResponse post(@Valid @RequestBody GruposPrioridadesRequest gruposPrioridadesRequest) {
+		return gruposPrioridadesService.create(gruposPrioridadesRequest);
+		
 	}
-
+	
 	@PutMapping("/{codigo}")
-	public GruposPrioridades update(@PathVariable Long codigo, @RequestBody GruposPrioridades gruposPrioridades) {
-		return gruposPrioridadesRepository.findById(codigo).map(
-				record -> {
-					record.setNome(gruposPrioridades.getNome());
-					record.setDescricao(gruposPrioridades.getDescricao());
-					return gruposPrioridadesRepository.save(record);
-		}).orElseThrow(() -> new NotFound());
+	public GruposPrioridadesResponse update(@PathVariable Long codigo, @RequestBody GruposPrioridadesRequest gruposPrioridadesRequest) {
+		return gruposPrioridadesService.update(gruposPrioridadesRequest, codigo);
 
 	}
 	
 	@DeleteMapping("/{codigo}")
 	public void delete(@PathVariable Long codigo) {
-		gruposPrioridadesRepository.deleteById(codigo);
+		gruposPrioridadesService.deleteById(codigo);
 		
 	}
 

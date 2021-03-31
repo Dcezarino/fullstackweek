@@ -1,10 +1,7 @@
 package br.com.fullstackweek.request;
 
-import java.util.Date;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
@@ -29,14 +26,13 @@ public class PessoaRequest {
 	@NotNull
 	private Integer idade;
 	
-	@NotNull
-	private Date dataNascimento;	
+	@NotBlank
+	private String dataNascimento;	
 	
 	@NotNull
-	private Boolean isVacinada;
+	private Boolean isVacinada;	
 	
-	@NotNull	
-	@Positive
-    private Long idGrupoPrioridade;
+	//@NotNull
+    private Long codigoGrupoPrioridade;
 
 }

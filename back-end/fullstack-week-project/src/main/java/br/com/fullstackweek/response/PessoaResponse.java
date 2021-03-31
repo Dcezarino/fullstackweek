@@ -1,9 +1,5 @@
 package br.com.fullstackweek.response;
 
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import br.com.fullstackweek.entity.GruposPrioridades;
 import br.com.fullstackweek.entity.Pessoa;
 import lombok.Data;
@@ -23,7 +19,7 @@ public class PessoaResponse {
 		this.setIdade(pessoa.getIdade());
 		this.setDataNascimento(pessoa.getDataNascimento());
 		this.setIsVacinada(pessoa.getIsVacinada());
-		this.setGrupo(pessoa.getGrupo());			
+		this.setGrupo(pessoa.getGrupo());		
 	}
 	
 	private Long codigo;
@@ -38,14 +34,11 @@ public class PessoaResponse {
 	
 	private Integer idade;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
-	private Date dataNascimento;	
+	private String dataNascimento;	
 	
 	private Boolean isVacinada;
 	
-	private GruposPrioridades grupo;
-
-	
+	private GruposPrioridades grupo;	
 	
 
 }
